@@ -29,6 +29,13 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+TEMPLATE_LOADERS = (
+    ('pyjade.ext.django.Loader',(
+        'django.template.loaders.filesystem.Loader',
+        'django.template.loaders.app_directories.Loader',
+    )),
+)
+
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
@@ -36,6 +43,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'maparea'
 )
 
 MIDDLEWARE_CLASSES = (
