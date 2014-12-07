@@ -2,3 +2,4 @@
 .idea/*
 polygons/.idea/*
 *.pyc
+polygons/debug.log

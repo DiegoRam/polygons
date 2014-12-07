@@ -1,0 +1,25 @@
+extends maparea/layout
+block content
+    .container-fluid
+        .row
+            .col-md-6.col-md-offset-3
+                .jumbotron
+                    form.form-horizontal(role="form", action='login', method='POST')
+                        | {% csrf_token %}
+                        .form-group
+                            label.col-sm-2.control-label(for="inputUser") user
+                            .col-sm-10
+                                input.form-control#inputUser(name='username')
+                        .form-group
+                            label.col-sm-2.control-label(for="inputPass") password
+                            .col-sm-10
+                                input.form-control#inputPass(name='password')
+
+                        .form-group
+                            .col-sm-offset-2.col-sm-10
+                                .checkbox
+                                    label
+                                        input(type="checkbox") remember me
+                        .form-group
+                            .col-sm-offset-2.col-sm-10
+                                button.btn.btn-info(type="submit") sign in

@@ -16,9 +16,14 @@ html(lang=en)
                 .collapse.navbar-collapse
                     ul.nav.navbar-nav
                         li
-                            a(href="/") create my areas
+                            a(href="/maparea") create my areas
                         li
-                            a(href="/consola") query
+                            a(href="/maparea/query") query
+                    ul.nav.navbar-nav.navbar-right
+                        li
+                            a(href='#') #{username}
+                        li
+                            a(href="/maparea/logout") logout
 
         block content
         block scripts_footer
