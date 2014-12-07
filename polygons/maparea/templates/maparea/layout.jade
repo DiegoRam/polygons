@@ -2,6 +2,23 @@
 html(lang=en)
     head
         title MyAreas
+        meta(name="viewport", content="initial-scale=1.0, user-scalable=no")
+        meta(charset='utf-8')
         link(rel="stylesheet", href="#{STATIC_URL}/css/bootstrap.css")
+        block styles
+        block scripts
     body
+        nav.navbar.navbar-inverse
+            .container-fluid
+                .navbar-header
+                    a.navbar-brand.console(href="#") Google Areas
+                .collapse.navbar-collapse
+                    ul.nav.navbar-nav
+                        li
+                            a(href="/") create my areas
+                        li
+                            a(href="/consola") query
+
         block content
+        footer by @diegoram
+        block scripts_footer
