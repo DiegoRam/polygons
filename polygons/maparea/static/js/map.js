@@ -3,7 +3,7 @@ $(document).ready(function() {
 
     function initialize() {
         var mapOptions = {
-            zoom: 8,
+            zoom: 11,
             center: new google.maps.LatLng(37.708, -122.280)
         };
         map = new google.maps.Map(document.getElementById('map-canvas'),

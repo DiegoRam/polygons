@@ -3,3 +3,4 @@
 polygons/.idea/*
 *.pyc
 polygons/debug.log
+mozio_server.pem

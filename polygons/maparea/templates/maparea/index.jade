@@ -6,20 +6,32 @@ block scripts
     script(src='https://maps.googleapis.com/maps/api/js?v=3.exp')
 block scripts_footer
     script(src="#{STATIC_URL}js/map.js")
+    script(src="#{STATIC_URL}js/areas.js")
 block content
     .container-fluid
         .row
             .col-md-2
-                .panel.panel-info
-                    .panel-heading
-                        p
-                            strong create your areas
-                    .panel-body
-                        p
-                            | Here you can add you areas by clicking upon the map to fix the edges.
-                            | Doing so, you should get your areas shaped on it.
-                button.btn.btn-info create an area
-                button.btn.btn-default save the area
+                .container-fluid
+                    .row
+                        .panel.panel-info
+                            .panel-heading
+                                p
+                                    strong create your areas
+                            .panel-body
+                                p
+                                    | Here you can add you areas by clicking upon the map to fix the edges.
+                                    | Doing so, you should get your areas shaped on it.
+                    .row
+                        form.form-horizontal
+                            .form-group
+                                .col-sm-offset-1.col-sm-10
+                                    button.btn.btn-info#create create an area
+                            .form-group
+                                .col-sm-offset-1.col-sm-10
+                                    button.btn.btn-success#save(disabled) save the area
+                            .form-group
+                                .col-sm-offset-1.col-sm-10
+                                    button.btn.btn-danger#cancel(disabled) cancel
             .col-md-10
                 .jumbotron
                     div#map-canvas
