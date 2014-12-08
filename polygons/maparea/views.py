@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
 from django.contrib.auth import logout, authenticate, login
 import logging
+from maparea.models import User, Polygon
 
 logger = logging.getLogger(__name__)
 
@@ -18,8 +20,28 @@ def authenticated(method):
 
 @authenticated
 def index(request):
+
+    query = User.objects.filter(username__exact=request.user.username)
+
+    if query is None or len(query) < 1:
+        User(username=request.user.username).save()
+
     context = {'username': request.user.username}
     return render(request, 'maparea/index.jade', context)
+
+
+def get_user_polygons(request, username):
+    query = User.objects.filter(username__exact=username)
+    if not query is None and len(query) > 0:
+        polygons = Polygon.objects.filter(user__username__exact=username)
+        if not polygons is None and len(polygons) > 0:
+            str_polygons = '[' + ','.join([polygon.get_points_list_to_json() for polygon in polygons]) + ']'
+            return HttpResponse(content=str_polygons, content_type='application/json')
+        else:
+            return HttpResponse(status=404, content="Polygon not found")
+    else:
+        return HttpResponse(status=404, content="User Not Found")
+
 
 
 def login_view(request):
@@ -46,4 +68,10 @@ def query(request):
 def logout_view(request):
     logout(request)
     return redirect('/maparea/login')
+
+
+def savePolygons(request):
+    if request.method != 'POST':
+        return HttpResponse(status=403)
+
 

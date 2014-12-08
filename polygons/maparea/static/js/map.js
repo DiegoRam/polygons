@@ -20,6 +20,30 @@ $(document).ready(function() {
         poly.setMap(map);
         poly.setPaths(new google.maps.MVCArray([path]));
 
+        //add the preexistent polygons
+        console.info("username: " + $('#username').text());
+        $.getJSON('/maparea/'+ $('#username').text(), function(data){
+            for(var i in data){
+                //console.info('polygon array ' + JSON.stringify(data[i]));
+                var coords = [];
+                for (var j in data[1]){
+                    console.info("location" + JSON.stringify(data[i][j]));
+                    coords.push(new google.maps.LatLng(data[i][j].lat, data[i][j].lng));
+                }
+                new google.maps.Polygon({
+                    map: map,
+                    paths: coords,
+                    strokeColor: '#FF0000',
+                    strokeOpacity: 0.8,
+                    strokeWeight: 2,
+                    fillColor: '#FF0000',
+                    fillOpacity: 0.35,
+                    draggable: true,
+                    geodesic: true
+                });
+            }
+        });
+
     }
 
 
@@ -90,7 +114,7 @@ $(document).ready(function() {
     $('#save').click(function(){
         console.info('saving');
         // TODO save properly using ajax
-        reset();
+        initialize();
     });
 
     function setAllMap(map) {
