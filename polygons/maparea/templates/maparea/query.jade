@@ -1,5 +1,4 @@
 extends maparea/layout
-
 block styles
     link(rel="stylesheet", href="#{STATIC_URL}css/main.css")
 block scripts
@@ -10,16 +9,14 @@ block content
     .container-fluid
         .row
             .col-md-2
-                .panel.panel-info
+                .panel.panel-warning
                     .panel-heading
                         p
-                            strong create your areas
+                            strong check your points
                     .panel-body
                         p
-                            | Here you can add you areas by clicking upon the map to fix the edges.
-                            | Doing so, you should get your areas shaped on it.
-                button.btn.btn-info create an area
-                button.btn.btn-default save the area
+                            | Here you can verify if a given point belong to any area
+                            | Just clicl the map and check this out.
             .col-md-10
                 .jumbotron
                     div#map-canvas
