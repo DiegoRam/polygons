@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from django.contrib.auth import logout, authenticate, login
 import logging
 from maparea.models import User, Polygon
+import json
+from django.views.decorators.csrf import csrf_exempt
 
 logger = logging.getLogger(__name__)
 
@@ -69,9 +71,20 @@ def logout_view(request):
     logout(request)
     return redirect('/maparea/login')
 
-
+@csrf_exempt
 def savePolygons(request):
-    if request.method != 'POST':
+    if request.method == 'POST':
+        data = request.POST
+        user = User.objects.filter(username__exact=request.user.username)
+        if not user is None and len(user) > 0:
+            points = []
+            for i in range(len(data)):
+                if not data.get('data['+str(i)+'][lat]') is None:
+                    points.append((float(str(data.get('data['+str(i)+'][lat]'))), float(str(data.get('data['+str(i)+'][lng]')))))
+            print 'points: ' + str(points)
+            Polygon(user=user[0], points=str(points)).save()
+        return HttpResponse(status=200)
+    else:
         return HttpResponse(status=403)
 
 

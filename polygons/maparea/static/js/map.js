@@ -1,6 +1,5 @@
 $(document).ready(function() {
     var map, poly;
-    var polygons = [];
     var path = new google.maps.MVCArray;
     var markers = [];
 
@@ -26,10 +25,12 @@ $(document).ready(function() {
             for(var i in data){
                 //console.info('polygon array ' + JSON.stringify(data[i]));
                 var coords = [];
-                for (var j in data[1]){
+                for (var j in data[i]){
                     console.info("location" + JSON.stringify(data[i][j]));
                     coords.push(new google.maps.LatLng(data[i][j].lat, data[i][j].lng));
+
                 }
+                console.log('cords' + coords);
                 new google.maps.Polygon({
                     map: map,
                     paths: coords,
@@ -114,7 +115,17 @@ $(document).ready(function() {
     $('#save').click(function(){
         console.info('saving');
         // TODO save properly using ajax
-        initialize();
+        console.info('path: ' + path);
+        data = [];
+        path.forEach(function(element, index){
+            console.log('element: ' + element.lat());
+            data.push({lat: element.lat(), lng: element.lng()})
+        });
+
+        $.post('/maparea/savepolygon', {data: data} , function(result){
+            reset();
+        });
+
     });
 
     function setAllMap(map) {
