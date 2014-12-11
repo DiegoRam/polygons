@@ -11,8 +11,6 @@ $(document).ready(function(){
         var map = new google.maps.Map(document.getElementById('map-canvas'),
             mapOptions);
 
-        //create all the polygons
-
         $.getJSON('/maparea/polygons/all', function(data){
             if (data){
                 _.each(data, function(element){
@@ -20,36 +18,43 @@ $(document).ready(function(){
                     _.each(element.locations, function(location){
                         coords.push(new google.maps.LatLng(location.lat, location.lng));
                     });
-                    polygons.push(new google.maps.Polygon({
+                    draw = new google.maps.Polygon({
                         paths: coords
-                    }));
+                    });
+                    polygons.push({username: element.username,polygon: draw});
                 });
             }
-
+            console.log('polygons count: ' + polygons.length);
         });
 
-        google.maps.event.addListener(map, 'click', function(e) {
-            var result;
-            if (google.maps.geometry.poly.containsLocation(e.latLng, bermudaTriangle)) {
-                result = 'red';
-            } else {
-                result = 'green';
-            }
+        google.maps.event.addListener(map, 'click', function(e){
+            var result = {};
+            _.each(polygons, function(element, index){
+                console.log('user:' + element.username);
+                console.log('location: ' + JSON.stringify(element.polygon));
+                if(google.maps.geometry.poly.containsLocation(e.latLng, element.polygon)){
+                    result.color = 'red';
+                    result.content = element.username + ' area service.';
 
-            var circle = {
-                path: google.maps.SymbolPath.CIRCLE,
-                fillColor: result,
-                fillOpacity: .2,
-                strokeColor: 'white',
-                strokeWeight: .5,
-                scale: 5
-            };
+                } else {
+                    result.color = 'green';
+                    result.content = 'Free area service.';
+                }
+            });
 
-            new google.maps.Marker({
+            console.log('result: ' + result.content);
+            var newMarker = new google.maps.Marker({
                 position: e.latLng,
-                map: map,
-                icon: circle
-            })
+                map: map
+            });
+
+            var infoWindow = new google.maps.InfoWindow({
+                content: result.content
+            });
+
+            google.maps.event.addListener(newMarker, 'click', function() {
+                infoWindow.open(map,newMarker);
+            });
         });
     }
 
