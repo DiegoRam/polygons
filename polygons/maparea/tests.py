@@ -9,7 +9,7 @@ class PolygonsTest(TestCase):
     def test_create_single_polygon(self):
         user = User(username='tasha')
         user.save()
-        points = [(37,43),(35,122)]
+        points = [(37.22,43.5678),(35,122)]
         polygon = Polygon(user=user, points=str(points))
         polygon.save()
 

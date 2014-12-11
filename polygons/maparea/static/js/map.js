@@ -25,12 +25,12 @@ $(document).ready(function() {
             for(var i in data){
                 //console.info('polygon array ' + JSON.stringify(data[i]));
                 var coords = [];
-                for (var j in data[i]){
-                    console.info("location" + JSON.stringify(data[i][j]));
-                    coords.push(new google.maps.LatLng(data[i][j].lat, data[i][j].lng));
+                for (var j in data.locations[i]){
+                    console.info("location" + JSON.stringify(data.locations[i][j]));
+                    coords.push(new google.maps.LatLng(data.locations[i][j].lat, data.locations[i][j].lng));
 
                 }
-                console.log('cords' + coords);
+                console.log('coords' + coords);
                 new google.maps.Polygon({
                     map: map,
                     paths: coords,

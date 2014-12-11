@@ -81,10 +81,17 @@ def savePolygons(request):
             for i in range(len(data)):
                 if not data.get('data['+str(i)+'][lat]') is None:
                     points.append((float(str(data.get('data['+str(i)+'][lat]'))), float(str(data.get('data['+str(i)+'][lng]')))))
-            print 'points: ' + str(points)
             Polygon(user=user[0], points=str(points)).save()
         return HttpResponse(status=200)
     else:
         return HttpResponse(status=403)
 
+
+def all_pollygons(request):
+    if request.method == 'GET':
+        polygons = Polygon.objects.all()
+        content_polygons = '[' + ','.join([polygon.get_points_list_to_json() for polygon in polygons]) + ']'
+        return HttpResponse(content_type='application/json', content=content_polygons)
+    else:
+        return HttpResponse(status=403)
 

@@ -1,5 +1,7 @@
 from django.db import models
 import ast
+import json
+
 
 # Create your models here.
 
@@ -19,8 +21,8 @@ class Polygon(models.Model):
         return self.user.username + " " + self.polygon
 
     def get_points_list_to_json(self):
-        jsonstr = "["
-        for pair in ast.literal_eval(self.points):
-            jsonstr += '{"lat": ' + str(pair[0]) + ', "lng": ' + str(pair[1]) + '},'
+        polygon_dict = {}
+        polygon_dict['username'] = self.user.username
+        polygon_dict['locations'] = [{'lat': pair[0], 'lng': pair[1]} for pair in ast.literal_eval(self.points)]
 
-        return jsonstr[:len(jsonstr)-1] + "]"
+        return json.dumps(polygon_dict)

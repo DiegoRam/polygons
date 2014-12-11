@@ -4,7 +4,7 @@ block styles
 block scripts
     script(src='https://maps.googleapis.com/maps/api/js?v=3.exp')
 block scripts_footer
-    script(src="#{STATIC_URL}js/map.js")
+    script(src="#{STATIC_URL}js/query.js")
 block content
     .container-fluid
         .row
@@ -16,7 +16,7 @@ block content
                     .panel-body
                         p
                             | Here you can verify if a given point belong to any area
-                            | Just clicl the map and check this out.
+                            | Just click the map and check this out.
             .col-md-10
                 .jumbotron
                     div#map-canvas
