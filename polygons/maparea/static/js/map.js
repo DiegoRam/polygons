@@ -25,9 +25,9 @@ $(document).ready(function() {
             for(var i in data){
                 //console.info('polygon array ' + JSON.stringify(data[i]));
                 var coords = [];
-                for (var j in data.locations[i]){
-                    console.info("location" + JSON.stringify(data.locations[i][j]));
-                    coords.push(new google.maps.LatLng(data.locations[i][j].lat, data.locations[i][j].lng));
+                for (var j in data[i].locations){
+                    console.info("location" + JSON.stringify(data[i].locations[j]));
+                    coords.push(new google.maps.LatLng(data[i].locations[j].lat, data[i].locations[j].lng));
 
                 }
                 console.log('coords' + coords);

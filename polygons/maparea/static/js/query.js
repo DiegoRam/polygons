@@ -1,5 +1,7 @@
 $(document).ready(function(){
 
+    var polygons = [];
+
     function initialize() {
         var mapOptions = {
             center: new google.maps.LatLng(37.708, -122.280),
@@ -12,23 +14,19 @@ $(document).ready(function(){
         //create all the polygons
 
         $.getJSON('/maparea/polygons/all', function(data){
+            if (data){
+                _.each(data, function(element){
+                    var coords = [];
+                    _.each(element.locations, function(location){
+                        coords.push(new google.maps.LatLng(location.lat, location.lng));
+                    });
+                    polygons.push(new google.maps.Polygon({
+                        paths: coords
+                    }));
+                });
+            }
 
         });
-
-        _.each([1,2,3,4], function(element, index){
-            console.log(element);
-        });
-
-
-        /*var triangleCoords = [
-            new google.maps.LatLng(25.774252, -80.190262),
-            new google.maps.LatLng(18.466465, -66.118292),
-            new google.maps.LatLng(32.321384, -64.75737)
-        ];
-
-        var bermudaTriangle = new google.maps.Polygon({
-            paths: triangleCoords
-        });*/
 
         google.maps.event.addListener(map, 'click', function(e) {
             var result;
